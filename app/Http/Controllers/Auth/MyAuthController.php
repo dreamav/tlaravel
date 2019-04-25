@@ -9,5 +9,12 @@ use App\Http\Controllers\Controller;
 
 class MyAuthController extends Controller
 {
-    //
+    public function showLogin(){
+        return view('auth.login');
+    }
+
+    public function authenticate(Request $request){
+        $array = $request->all();
+        dump($array);
+    }
 }

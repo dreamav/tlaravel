@@ -16,7 +16,7 @@ class AdminController extends Controller
 
     public function show(){
         $user = Auth::user();
-        dump($user);
+//        dump($user);
         return view('welcome');
     }
 }

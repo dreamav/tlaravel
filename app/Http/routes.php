@@ -37,12 +37,8 @@ Route::post('/contact',['uses'=>'Admin\ContactController@store']);
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
-    ////
-    
-    
-    ///
-    
+    Route::get('/login',['uses'=>'Auth\MyAuthController@showLogin']);
+    Route::post('/login',['uses'=>'Auth\MyAuthController@authenticate']);
 });
 
 /*Route::group(['middleware' => 'web'], function () {
@@ -50,7 +46,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/home', 'HomeController@index');
 });*/
-Route::auth();
+
 Route::group(['prefix'=>'admin','middleware'=>['web','auth']], function(){
     Route::get('/',['uses'=>'Admin\AdminController@show','as'=>'admin_index']);
     Route::get('/add/post',['uses'=>'Admin\AdminPostController@create','as'=>'admin_add_post']);
