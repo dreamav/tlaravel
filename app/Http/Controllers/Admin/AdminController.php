@@ -20,7 +20,14 @@ class AdminController extends Controller
 
         if (!Auth::check()) {
         	$user = User::find(1);
-        	Auth::login($user);
+        	// Auth::login($user);
+        	// Auth::guard('web')->login($user);
+
+        	Auth::guard('web')->logout();
+        	Auth::loginUsingId(1);
+
+
+
         	// return redirect('/login');
         }
         if (Auth::viaRemember()) {
