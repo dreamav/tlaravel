@@ -30,10 +30,21 @@ class AuthServiceProvider extends ServiceProvider
 
             foreach ($user->roles as $role) {
 
-                if ($role->name == 'admin') {
+                if ($role->name == 'Admin') {
                     return true;
                 }
 
+            }
+            return false;
+        });
+
+        $gate->define('update-article', function (User $user, $article) {
+            foreach ($user->roles as $role) {
+                if ($role->name == 'Admin') {
+                    if ($user->id == $article->user_id) {
+                        return true;
+                    }
+                }
             }
             return false;
         });
