@@ -11,12 +11,18 @@ use Auth;
 class AdminController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
-    public function show(){
+    public function show(Request $request){
         $user = Auth::user();
-//        dump($user);
+
+        if (!Auth::check()) {
+        	return redirect('/login');
+        }
+
+        // $user = $request->user();
+        dump($user);
         return view('welcome');
     }
 }
