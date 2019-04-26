@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -13,8 +14,19 @@ class MyAuthController extends Controller
         return view('auth.login');
     }
 
-    public function authenticate(Request $request){
+    public function authenticate(Request $request) {
         $array = $request->all();
-        dump($array);
+
+        $remember = $request->has('remember');
+
+        if (Auth::attempt(['email' => $array['email'], 'password' => $array['password']], $remember)) {
+            return redirect()->intended('/admin');
+        }
+
+        return redirect()->back()
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors([
+                'email' => 'Данные аутентификации не верны'
+            ]);
     }
 }
