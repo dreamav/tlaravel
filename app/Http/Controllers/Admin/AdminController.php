@@ -20,6 +20,9 @@ class AdminController extends Controller
         if (!Auth::check()) {
         	return redirect('/login');
         }
+        if (Auth::viaRemember()) {
+        	echo 'yes';
+        }
 
         // $user = $request->user();
         dump($user);
