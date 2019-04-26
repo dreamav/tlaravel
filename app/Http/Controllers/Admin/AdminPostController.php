@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,6 +20,10 @@ class AdminPostController extends Controller
 	
 	//new post
     public function create(Request $request) {
+
+        if(Gate::denies('add-article')){
+            return redirect()->back()->with(['message'=>'У вас нет прав']);
+        }
     	
     	$this->validate($request,[
     		'name'=>'required'
