@@ -41,4 +41,15 @@ class ArticlePolicy
         }
         return false;
     }
+
+    public function before(User $user){
+        foreach ($user->roles as $role) {
+
+            if ($role->name == 'Admin') {
+                return true;
+            }
+
+        }
+        return false;
+    }
 }
