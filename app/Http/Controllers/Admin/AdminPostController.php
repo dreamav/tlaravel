@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Article;
 use Gate;
 use Illuminate\Http\Request;
 
@@ -10,6 +11,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use Auth;
+use Session;
 
 class AdminPostController extends Controller
 {
@@ -21,8 +23,12 @@ class AdminPostController extends Controller
 	//new post
     public function create(Request $request) {
 
-        if(Gate::denies('add-article')){
-            return redirect()->back()->with(['message'=>'У вас нет прав']);
+        Session::remove('message');
+        $article = new Article;
+
+        if(Gate::denies('add', $article)){
+            Session::put(['message' => 'У вас нет прав']);
+            return redirect()->back();
         }
     	
     	$this->validate($request,[
@@ -37,9 +43,9 @@ class AdminPostController extends Controller
             'img' => $data['img'],
             'text' => $data['text']
         ]);
-        
-       
-		return redirect()->back()->with('message','Материал добавлен');
+
+        Session::put(['message' => 'Материал добавлен']);
+		return redirect()->back();
        
 	}
 }
