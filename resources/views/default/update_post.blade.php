@@ -24,6 +24,12 @@
 	    </div>
 	@endif
 
+	@cannot('update',$article)
+	    <div class="alert alert-danger">
+	        Нет прав
+	    </div>
+	@endcannot
+
 	<form method="post" action="{{ route('admin_update_post_p') }}">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<input type="hidden" name="id" value="{{ $article->id }}">
