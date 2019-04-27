@@ -33,7 +33,8 @@ class AdminUpdatePostController extends Controller
 
         $article = Article::find($data['id']);
 
-        if (Gate::allows('update', $article)) {
+        // if (Gate::allows('update', $article)) {
+        if ($request->user()->can('update', $article)) {
             $article->name = $data['name'];
             $article->img = $data['img'];
             $article->text = $data['text'];

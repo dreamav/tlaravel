@@ -26,7 +26,12 @@ class AdminPostController extends Controller
         Session::remove('message');
         $article = new Article;
 
-        if(Gate::denies('add', $article)){
+        /*if(Gate::denies('add', $article)){
+            Session::put(['message' => 'У вас нет прав']);
+            return redirect()->back();
+        }*/
+
+        if ($request->user()->cannot('add',$article)) {
             Session::put(['message' => 'У вас нет прав']);
             return redirect()->back();
         }
